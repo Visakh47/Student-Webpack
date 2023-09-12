@@ -1,8 +1,8 @@
 export class IndexedDBManager {
     private databaseName: string;
     private version: number;
-    private db: IDBDatabase | null = null;
-    private dbPromise : Promise<IDBDatabase | null>;
+    public db: IDBDatabase | null = null;
+    public dbPromise : Promise<IDBDatabase | null>;
     constructor(databaseName: string, version: number) {
         this.databaseName = databaseName;
         this.version = version;

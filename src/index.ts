@@ -1,43 +1,33 @@
-var students = [];
 import '../style.css';
 import './indexedDatabase.js';
 import { IndexedDBManager } from './indexedDatabase.js';
 
-// let db;
+interface Student {
+  id?: number
+  universityId: string;
+  name: string;
+  age: string;
+  class: string;
+  address: string;
+}
 
-// const dbName = "studentDatabase";
+let students: Student[] = [];
 
-// const request = indexedDB.open(dbName, 1);
+let dbManager : IndexedDBManager;
 
-// request.onsuccess = function(event) {
-//     db = request.result;
-//     console.log("Connected to DB");
-//     retreiveData();
-// }
-
-// request.onerror = (event) => {
-//   // Handle errors.
-// };
-// request.onupgradeneeded = (event) => {
-//   db = event.target.result;
-//   //object store is analogues to a table
-//   const studentTable = db.createObjectStore("studentDetails", { keyPath: "id" , autoIncrement: true});
-
-//   //create
-//   studentTable.createIndex("universityId","universityId", {unique: true});
-//   studentTable.createIndex("name", "name", { unique: false });
-// };
-
-let dbManager;
-
-async function addStudent(e) {
+async function addStudent(e: Event) {
   
-    const studentUniversityId = document.querySelector("#student-universityId");
-    const studentName = document.querySelector("#student-name");
-    const studentAge = document.querySelector("#student-age");
-    const studentClass = document.querySelector("#student-class");
-    const studentAddress = document.querySelector("#student-address");
-    const student = {universityId: studentUniversityId.value,  name: studentName.value, age: studentAge.value, class: studentClass.value, address: studentAddress.value};
+    const studentUniversityId = document.querySelector<HTMLInputElement>("#student-universityId");
+    const studentName = document.querySelector<HTMLInputElement>("#student-name");
+    const studentAge = document.querySelector<HTMLInputElement>("#student-age");
+    const studentClass = document.querySelector<HTMLInputElement>("#student-class");
+    const studentAddress = document.querySelector<HTMLInputElement>("#student-address");
+    const student : Student = {
+    universityId: studentUniversityId!.value, 
+    name: studentName!.value, 
+    age: studentAge!.value, 
+    class: studentClass!.value,
+    address: studentAddress!.value};
 
     e.preventDefault();
 
@@ -47,55 +37,55 @@ async function addStudent(e) {
   }
 
 
-const Addmodal = document.querySelector("#addStudentModal");
-const Editmodal = document.querySelector("#editStudentModal");
-const overlay = document.querySelector(".overlay");
-const addStudentModalBtn = document.querySelector("#CreateStudent");
-const closeStudentModalBtn = document.querySelector("#cancelAddStudentBtn")
-const addStudentConfirm = document.querySelector("#addStudentBtn");
+const Addmodal = document.querySelector<HTMLInputElement>("#addStudentModal");
+const Editmodal = document.querySelector<HTMLInputElement>("#editStudentModal");
+const overlay = document.querySelector<HTMLInputElement>(".overlay");
+const addStudentModalBtn = document.querySelector<HTMLInputElement>("#CreateStudent");
+const closeStudentModalBtn = document.querySelector<HTMLInputElement>("#cancelAddStudentBtn")
+const addStudentConfirm = document.querySelector<HTMLInputElement>("#addStudentBtn");
 
-const closeEditStudentModalBtn = document.querySelector("#cancelEditStudentBtn")
-const editStudentConfirm = document.querySelector("#editStudentBtn");
+const closeEditStudentModalBtn = document.querySelector<HTMLInputElement>("#cancelEditStudentBtn")
+const editStudentConfirm = document.querySelector<HTMLInputElement>("#editStudentBtn");
 
-addStudentModalBtn.addEventListener(
+addStudentModalBtn!.addEventListener(
     "click", addStudentModalOpen
 );
 
-closeStudentModalBtn.addEventListener(
+closeStudentModalBtn!.addEventListener(
     "click", addStudentModalClose
 );
 
-closeEditStudentModalBtn.addEventListener(
+closeEditStudentModalBtn!.addEventListener(
     "click", editStudentModalClose
 );
 
 
 
-addStudentConfirm.addEventListener("click", addStudent);
+addStudentConfirm!.addEventListener("click", addStudent);
 
 function addStudentModalOpen() {
-    Addmodal.classList.remove("hidden");
-    Addmodal.classList.add("overlay");
+    Addmodal!.classList.remove("hidden");
+    Addmodal!.classList.add("overlay");
 }
 
 function addStudentModalClose() {
-    Addmodal.classList.add("hidden");
-    Addmodal.classList.remove("overlay");
+    Addmodal!.classList.add("hidden");
+    Addmodal!.classList.remove("overlay");
 }
 
 function editStudentModalOpen() {
-    Editmodal.classList.remove("hidden");
-    Editmodal.classList.add("overlay");
+    Editmodal!.classList.remove("hidden");
+    Editmodal!.classList.add("overlay");
 }
 
 function editStudentModalClose() {
-    Editmodal.classList.add("hidden");
-    Editmodal.classList.remove("overlay")
+    Editmodal!.classList.add("hidden");
+    Editmodal!.classList.remove("overlay")
 }
 
 
 
-  function createStudentRow(student) {
+  function createStudentRow(student: Student) {
     const row = document.createElement('tr');
 
     const nameCell = document.createElement('td');
@@ -147,54 +137,54 @@ function editStudentModalClose() {
   
 
   function renderTable() {
-    const tableBody = document.querySelector('#student-table tbody');
-    tableBody.innerHTML = '';
+    const tableBody: HTMLElement | null = document.querySelector('#student-table tbody');
+    tableBody!.innerHTML = '';
     students.forEach((student) => {
       const row = createStudentRow(student);
-      tableBody.appendChild(row);
+      tableBody!.appendChild(row);
     });
   }
 
 
-var Editedstudent;
+let Editedstudent : Student;
 
-async function editStudent(student) {
-    const studentUniversityId = document.querySelector("#Estudent-universityId");
-    const studentName = document.querySelector("#Estudent-name");
-    const studentAge = document.querySelector("#Estudent-age");
-    const studentClass = document.querySelector("#Estudent-class");
-    const studentAddress = document.querySelector("#Estudent-address");
+async function editStudent(student: Student) {
+    const studentUniversityId = document.querySelector<HTMLInputElement>("#Estudent-universityId");
+    const studentName = document.querySelector<HTMLInputElement>("#Estudent-name");
+    const studentAge = document.querySelector<HTMLInputElement>("#Estudent-age");
+    const studentClass = document.querySelector<HTMLInputElement>("#Estudent-class");
+    const studentAddress = document.querySelector<HTMLInputElement>("#Estudent-address");
 
     console.log(`Editing student ${student.name}: ${student.id}`);
 
-    student = await dbManager.getById(student.id);
+    student = await dbManager.getById(student.id as number);
     if(student) {
       //assigning values to modal
       console.log(student);
-      studentUniversityId.value = student.universityId;
-      studentName.value = student.name ;
-      studentAge.value = student.age;
-      studentClass.value = student.class;
-      studentAddress.value = student.address;
+      studentUniversityId!.value = student.universityId;
+      studentName!.value = student.name ;
+      studentAge!.value = student.age;
+      studentClass!.value = student.class;
+      studentAddress!.value = student.address;
       Editedstudent = student;
       editStudentModalOpen();
     }
   }
   
 
-  editStudentConfirm.addEventListener(
+  editStudentConfirm!.addEventListener(
     "click", async () => {
-        const studentUniversityId = document.querySelector("#Estudent-universityId");
-        const studentName = document.querySelector("#Estudent-name");
-        const studentAge = document.querySelector("#Estudent-age");
-        const studentClass = document.querySelector("#Estudent-class");
-        const studentAddress = document.querySelector("#Estudent-address");
+        const studentUniversityId = document.querySelector<HTMLInputElement>("#Estudent-universityId");
+        const studentName = document.querySelector<HTMLInputElement>("#Estudent-name");
+        const studentAge = document.querySelector<HTMLInputElement>("#Estudent-age");
+        const studentClass = document.querySelector<HTMLInputElement>("#Estudent-class");
+        const studentAddress = document.querySelector<HTMLInputElement>("#Estudent-address");
   
-        Editedstudent.name = studentName.value;
-        Editedstudent.age = studentAge.value;
-        Editedstudent.class = studentClass.value;
-        Editedstudent.universityId = studentUniversityId.value;
-        Editedstudent.address = studentAddress.value;
+        Editedstudent.name = studentName!.value;
+        Editedstudent.age = studentAge!.value;
+        Editedstudent.class = studentClass!.value;
+        Editedstudent.universityId = studentUniversityId!.value;
+        Editedstudent.address = studentAddress!.value;
         
         console.log(Editedstudent);
         await dbManager.edit(Editedstudent);
@@ -204,9 +194,9 @@ async function editStudent(student) {
     }
   );
   
-  function deleteStudent(student) {
+  function deleteStudent(student: Student) {
     console.log(`Deleting student: ${student.name}`);
-    dbManager.deleteById(student.id);
+    dbManager.deleteById(student.id as number);
     retreiveData();
   }
   
@@ -218,5 +208,5 @@ async function editStudent(student) {
     await dbManager.dbPromise;
 
     console.log(dbManager.db);
-    students = await retreiveData();
+    await retreiveData();
   })
