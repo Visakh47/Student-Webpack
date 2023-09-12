@@ -2,6 +2,7 @@ import '../style.css';
 import './indexedDatabase.js';
 import { IndexedDBManager } from './indexedDatabase.js';
 
+
 interface Student {
   id?: number
   universityId: string;
@@ -14,6 +15,7 @@ interface Student {
 let students: Student[] = [];
 
 let dbManager : IndexedDBManager;
+
 
 async function addStudent(e: Event) {
   
@@ -30,7 +32,7 @@ async function addStudent(e: Event) {
     address: studentAddress!.value};
 
     e.preventDefault();
-
+    
     await dbManager.add(student);
     addStudentModalClose();
     retreiveData();
