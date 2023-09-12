@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management Project</title>
+    <link rel="stylesheet" type= "text/css" href="./style.css">
+</head>
+<body>
+    
+    <div id="Apptitle">Student Management</div>
+
+    <a id="CreateStudent"> Add A New Student </a>
+
+    <section id="addStudentModal" class="modal hidden">
+        <div class="addStudentDetailsForm">
+            <h2>Add Student</h2>
+            <label for="StudentId">Student University Id: </label>
+            <input type="text" id="student-universityId" name="student-universityId"><br>
+            <label for="StudentName">Student Name: </label>
+            <input type="text" id="student-name" name="student-name"><br>
+            <label for="StudentAge">Student Age: </label>
+            <input type="text" id="student-age" name="student-age"><br>
+            <label for="StudentClass">Student Class: </label>
+            <input type="text" id="student-class" name="student-class"><br>
+            <label for="StudentAddress">Student Address: </label>
+            <input type="text" id="student-address" name="student-address"><br>
+
+            <button id="addStudentBtn">Add Student</button>
+            <button id="cancelAddStudentBtn">Cancel</button>
+        </div>
+    </section>
+
+    <section id="editStudentModal" class="modal hidden">
+        <div class="addStudentDetailsForm">
+            <h2>Edit Student</h2>
+            <label for="StudentId">Student University Id: </label>
+            <input type="text" id="Estudent-universityId" name="student-universityId"><br>
+            <label for="StudentName">Student Name: </label>
+            <input type="text" id="Estudent-name" name="student-name"><br>
+            <label for="StudentAge">Student Age: </label>
+            <input type="text" id="Estudent-age" name="student-age"><br>
+            <label for="StudentClass">Student Class: </label>
+            <input type="text" id="Estudent-class" name="student-class"><br>
+            <label for="StudentAddress">Student Address: </label>
+            <input type="text" id="Estudent-address" name="student-address"><br>
+
+            <button id="editStudentBtn">Edit Student</button>
+            <button id="cancelEditStudentBtn">Cancel</button>
+        </div>
+    </section>
+
+    <table id="student-table">
+        <thead>
+            <tr>
+                <th>University Id</th>
+                <th>Student Name</th>
+                <th>Age</th>
+                <th>Class</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Student rows will be added here by JavaScript -->
+        </tbody>
+    </table>
+
+
+    <div class="overlay hidden"></div>
+</body>
+</html>
